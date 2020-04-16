@@ -21,8 +21,9 @@ public class simulation {
 	     System.out.println("How many generations?");
 	     int k = input.nextInt();
 	     
-	     System.out.println("PITEMS"+ pItems);
+
 	     ArrayList<Player> players = new ArrayList<Player>();
+	     //Question 1
 	     for(int i = 0; i<n; i++) {
 	    	 if(i%4 == 0) {
 	    		 players.add(new Player("T4T"));
@@ -37,6 +38,28 @@ public class simulation {
 	    		 players.add(new Player("AD"));
 	    	 }
 	     }
+	     //Question 2 - Distribution 1
+//	     players.add(new Player("G"));
+//	     players.add(new Player("AC"));
+//	     for(int i = 2; i<n; i++) {
+//	    	 players.add(new Player("T4T"));
+//	     }
+	     //Distribution 2
+//	     for(int i = 1; i<50; i++) {
+//	    	 players.add(new Player("G"));
+//	     }
+//	     players.add(new Player("T4T"));
+//	     for(int i = 50; i<n; i++) {
+//	    	 players.add(new Player("AD"));
+//	     }
+//	     //Distribution 3
+//	     for(int i = 1; i<50; i++) {
+//	    	 players.add(new Player("AC"));
+//	     }
+//	     players.add(new Player("G"));
+//	     for(int i = 50; i<n; i++) {
+//	    	 players.add(new Player("AD"));
+//	     }
 	     //NEW GENERATION
 	     for(int g = 1; g<=k; g++) {
 		     int t4tPlayers = 0;
@@ -141,6 +164,8 @@ public class simulation {
 			    			 p1.addPayoff(1);
 			    			 p2.addPayoff(1);
 			    		 }
+			    		 p1.gamesPlayed++;
+			    		 p2.gamesPlayed++;
 			    	 }
 			     }
 		     }
@@ -154,23 +179,32 @@ public class simulation {
 		     int gSum = 0;
 		     int acSum = 0; 
 		     int adSum = 0; 
+		     int t4tGames = 0;
+		     int gGames = 0;
+		     int acGames = 0; 
+		     int adGames = 0;
 		     for(int i = 0; i<players.size();i++) {
 		    	 if(players.get(i).type=="T4T") {
 		    		 t4tSum+=players.get(i).payoff;
+		    		 t4tGames += players.get(i).gamesPlayed;
 		    	 }
 		    	 if(players.get(i).type=="G") {
 		    		 gSum+=players.get(i).payoff;
+		    		 gGames += players.get(i).gamesPlayed;
 		    	 }
 		    	 if(players.get(i).type=="AC") {
 		    		 acSum+=players.get(i).payoff;
+		    		 acGames += players.get(i).gamesPlayed;
 		    	 }
 		    	 if(players.get(i).type=="AD") {
 		    		 adSum+=players.get(i).payoff;
+		    		 adGames += players.get(i).gamesPlayed;
 		    	 }
 		    	 payoffSum += players.get(i).payoff;
 		     }
+		     
 		     System.out.println("Gen "+g+":	T4T: "+t4tSum+"	G: "+gSum+"	AC: "+acSum+"	AD: "+adSum+"	Total: "+payoffSum);
-		     System.out.println("Gen "+g+":	T4T: "+(double)t4tSum/t4tPlayers+"	G: "+(double)gSum/gPlayers+"	AC: "+(double)acSum/acPlayers+"	AD: "+(double)adSum/adPlayers);
+		     System.out.println("Gen "+g+":	T4T: "+(double)t4tSum/t4tGames+"	G: "+(double)gSum/gGames+"	AC: "+(double)acSum/acGames+"	AD: "+(double)adSum/adGames);
 		     //Rank
 		     Collections.sort(players);
 		     //Remove
@@ -188,6 +222,7 @@ public class simulation {
 		     //Reset
 		     for(int i = 0; i<players.size(); i++) {
 		    	 players.get(i).payoff = 0;
+		    	 players.get(i).gamesPlayed = 0;
 		     }
 	     }
 	     
